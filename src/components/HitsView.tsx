@@ -14,7 +14,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import MaterialTable from "material-table";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 import Alert from "./Alert";
 import Hit from "../interfaces/Hit";
@@ -112,15 +112,6 @@ function HitsView() {
         <Typography variant="h4" display="inline">
           All Hits
         </Typography>
-        <Button
-          className={classes.titleButton}
-          variant="contained"
-          color="primary"
-          component={Link}
-          to="/hit/create"
-        >
-          Create
-        </Button>
       </Box>
       <Grid className={classes.grid} container spacing={3}>
         <Grid item xs={12}>
