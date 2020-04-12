@@ -136,7 +136,7 @@ function SourceForm() {
       <Box display="flex" alignItems="center">
         <Typography variant="h4" display="inline">
           {source.id ? (isEdit ? "Edit" : "View") : "Create"} Source
-          {source.id && ` ${source.id}`}
+          {!isNaN(source.id) && ` ${source.id}`}
         </Typography>
         <span className={classes.titleButtons}>
           {!isEdit ? (

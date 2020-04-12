@@ -205,7 +205,7 @@ function CampaignForm() {
       <Box display="flex" alignItems="center">
         <Typography variant="h4" display="inline">
           {campaign.id ? (isEdit ? "Edit" : "View") : "Create"} Campaign
-          {campaign.id && ` ${campaign.id}`}
+          {!isNaN(campaign.id) && ` ${campaign.id}`}
         </Typography>
         <span className={classes.titleButtons}>
           {!isEdit ? (

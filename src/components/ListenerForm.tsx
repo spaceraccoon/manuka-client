@@ -132,7 +132,7 @@ function ListenerForm() {
       <Box display="flex" alignItems="center">
         <Typography variant="h4" display="inline">
           {listener.id ? (isEdit ? "Edit" : "View") : "Create"} Listener
-          {listener.id && ` ${listener.id}`}
+          {!isNaN(listener.id) && ` ${listener.id}`}
         </Typography>
         <span className={classes.titleButtons}>
           {!isEdit ? (
