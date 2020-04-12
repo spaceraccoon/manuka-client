@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface SideNavProps {
   mobileOpen: boolean;
-  handleDrawerToggle: () => void;
+  handleDrawerToggle: (isOpen: boolean) => void;
 }
 
 function SideNav(props: SideNavProps) {
@@ -45,7 +45,7 @@ function SideNav(props: SideNavProps) {
     <div>
       <div className={classes.toolbar} />
       <Divider />
-      <List>
+      <List onClick={() => handleDrawerToggle(false)}>
         <ListItem button component={Link} to="/campaign">
           <ListItemIcon>
             <InboxIcon />
@@ -80,7 +80,7 @@ function SideNav(props: SideNavProps) {
         <Drawer
           variant="temporary"
           open={mobileOpen}
-          onClose={handleDrawerToggle}
+          onClose={() => handleDrawerToggle(false)}
           classes={{
             paper: classes.drawerPaper,
           }}

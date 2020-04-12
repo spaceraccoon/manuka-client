@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+import CampaignForm from "./CampaignForm";
 import CampaignsView from "./CampaignsView";
 import HitForm from "./HitForm";
 import HitsView from "./HitsView";
@@ -29,8 +30,8 @@ function App() {
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+  const handleDrawerToggle = (isOpen: boolean) => {
+    setMobileOpen(isOpen);
   };
 
   return (
@@ -44,6 +45,12 @@ function App() {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Switch>
+            <Route path="/campaign/create">
+              <CampaignForm />
+            </Route>
+            <Route path="/campaign/:id">
+              <CampaignForm />
+            </Route>
             <Route path="/campaign">
               <CampaignsView />
             </Route>

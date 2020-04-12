@@ -2,6 +2,7 @@ import React from "react";
 import { AppBar, IconButton, Toolbar, Typography } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface TitleBarProps {
-  handleDrawerToggle: () => void;
+  handleDrawerToggle: (isOpen: boolean) => void;
 }
 
 function TitleBar(props: TitleBarProps) {
@@ -32,12 +33,18 @@ function TitleBar(props: TitleBarProps) {
           color="inherit"
           aria-label="open drawer"
           edge="start"
-          onClick={handleDrawerToggle}
+          onClick={() => handleDrawerToggle(true)}
           className={classes.menuButton}
         >
           <MenuIcon />
         </IconButton>
-        <Typography variant="h5" noWrap>
+        <Typography
+          variant="h5"
+          noWrap
+          component={Link}
+          to="/"
+          style={{ color: "white", textDecoration: "none" }}
+        >
           Manuka
         </Typography>
       </Toolbar>

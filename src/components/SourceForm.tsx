@@ -10,6 +10,7 @@ import {
   DialogTitle,
   FormControl,
   Grid,
+  MenuItem,
   Snackbar,
   TextField,
   Typography,
@@ -137,8 +138,8 @@ function SourceForm() {
       </Snackbar>
       <Box className={classes.title} display="flex" alignItems="center">
         <Typography variant="h4" display="inline">
-          {source.id ? (isEdit ? "Edit" : "View") : "Create"}{" "}
-          {source.id ? source.name : "Source"}
+          {source.id ? (isEdit ? "Edit" : "View") : "Create"} Source
+          {source.id && ` ${source.id}`}
         </Typography>
         <span className={classes.titleButtons}>
           {!isEdit ? (
@@ -226,9 +227,9 @@ function SourceForm() {
                 .filter((x) => isNaN(Number(x)) === false)
                 .map((key: string) => {
                   return (
-                    <option key={key} value={key}>
+                    <MenuItem key={key} value={key}>
                       {SourceType[Number(key)]}
-                    </option>
+                    </MenuItem>
                   );
                 })}
             </TextField>

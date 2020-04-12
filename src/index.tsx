@@ -8,12 +8,10 @@ import * as serviceWorker from "./serviceWorker";
 import theme from "./theme";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <App />
-    </ThemeProvider>
-  </React.StrictMode>,
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+    <App />
+  </ThemeProvider>,
   document.getElementById("root")
 );
 
