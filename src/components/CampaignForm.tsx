@@ -38,9 +38,6 @@ const useStyles = makeStyles((theme: Theme) =>
     margin: {
       margin: theme.spacing(1),
     },
-    title: {
-      marginTop: theme.spacing(1),
-    },
     titleButtons: {
       marginLeft: theme.spacing(2),
       "& > *": {
@@ -205,7 +202,7 @@ function CampaignForm() {
       >
         <Alert severity="error">{errorMessage}</Alert>
       </Snackbar>
-      <Box className={classes.title} display="flex" alignItems="center">
+      <Box display="flex" alignItems="center">
         <Typography variant="h4" display="inline">
           {campaign.id ? (isEdit ? "Edit" : "View") : "Create"} Campaign
           {campaign.id && ` ${campaign.id}`}

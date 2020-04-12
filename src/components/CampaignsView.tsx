@@ -24,9 +24,6 @@ const useStyles = makeStyles((theme: Theme) =>
     grid: {
       marginTop: theme.spacing(1),
     },
-    title: {
-      marginTop: theme.spacing(1),
-    },
     titleButton: {
       marginLeft: theme.spacing(2),
     },
@@ -112,7 +109,7 @@ function CampaignsView() {
         <Alert severity="error">{errorMessage}</Alert>
       </Snackbar>
 
-      <Box className={classes.title} display="flex" alignItems="center">
+      <Box display="flex" alignItems="center">
         <Typography variant="h4" display="inline">
           All Campaigns
         </Typography>

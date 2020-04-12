@@ -25,9 +25,6 @@ const useStyles = makeStyles((theme: Theme) =>
     grid: {
       marginTop: theme.spacing(1),
     },
-    title: {
-      marginTop: theme.spacing(1),
-    },
     titleButtons: {
       marginLeft: theme.spacing(2),
       "& > *": {
@@ -132,7 +129,7 @@ function ListenerForm() {
       >
         <Alert severity="error">{errorMessage}</Alert>
       </Snackbar>
-      <Box className={classes.title} display="flex" alignItems="center">
+      <Box display="flex" alignItems="center">
         <Typography variant="h4" display="inline">
           {listener.id ? (isEdit ? "Edit" : "View") : "Create"} Listener
           {listener.id && ` ${listener.id}`}
