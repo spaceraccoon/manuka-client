@@ -1,15 +1,19 @@
 import React from "react";
-import Divider from "@material-ui/core/Divider";
-import Drawer from "@material-ui/core/Drawer";
-import Hidden from "@material-ui/core/Hidden";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+import {
+  Divider,
+  Drawer,
+  Hidden,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from "@material-ui/core";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
+import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
+import RadioIcon from "@material-ui/icons/Radio";
+import TrackChangesIcon from "@material-ui/icons/TrackChanges";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -24,6 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
     drawerPaper: {
       width: drawerWidth,
     },
+    toolbar: theme.mixins.toolbar,
   })
 );
 
@@ -38,18 +43,32 @@ function SideNav(props: SideNavProps) {
 
   const drawer = (
     <div>
-      <Toolbar>
-        <Typography variant="h4" noWrap>
-          Manuka
-        </Typography>
-      </Toolbar>
+      <div className={classes.toolbar} />
       <Divider />
       <List>
-        <ListItem button>
+        <ListItem button component={Link} to="/campaign">
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
           <ListItemText primary="Campaigns" />
+        </ListItem>
+        <ListItem button component={Link} to="/hit">
+          <ListItemIcon>
+            <TrackChangesIcon />
+          </ListItemIcon>
+          <ListItemText primary="Hits" />
+        </ListItem>
+        <ListItem button component={Link} to="/listener">
+          <ListItemIcon>
+            <RadioIcon />
+          </ListItemIcon>
+          <ListItemText primary="Listeners" />
+        </ListItem>
+        <ListItem button component={Link} to="/source">
+          <ListItemIcon>
+            <LibraryBooksIcon />
+          </ListItemIcon>
+          <ListItemText primary="Sources" />
         </ListItem>
       </List>
     </div>

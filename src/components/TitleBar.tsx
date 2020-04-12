@@ -1,20 +1,12 @@
 import React from "react";
-import AppBar from "@material-ui/core/AppBar";
-import IconButton from "@material-ui/core/IconButton";
+import { AppBar, IconButton, Toolbar, Typography } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-
-const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     appBar: {
-      [theme.breakpoints.up("sm")]: {
-        width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: drawerWidth,
-      },
+      zIndex: theme.zIndex.drawer + 1,
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -26,12 +18,11 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface TitleBarProps {
-  title: string;
   handleDrawerToggle: () => void;
 }
 
 function TitleBar(props: TitleBarProps) {
-  const { handleDrawerToggle, title } = props;
+  const { handleDrawerToggle } = props;
   const classes = useStyles();
 
   return (
@@ -46,8 +37,8 @@ function TitleBar(props: TitleBarProps) {
         >
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" noWrap>
-          {title}
+        <Typography variant="h5" noWrap>
+          Manuka
         </Typography>
       </Toolbar>
     </AppBar>

@@ -1,7 +1,14 @@
 import React from "react";
-import Typography from "@material-ui/core/Typography";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+import CampaignsView from "./CampaignsView";
+import HitForm from "./HitForm";
+import HitsView from "./HitsView";
+import ListenerForm from "./ListenerForm";
+import ListenersView from "./ListenersView";
+import SourceForm from "./SourceForm";
+import SourcesView from "./SourcesView";
 import SideNav from "./SideNav";
 import TitleBar from "./TitleBar";
 
@@ -28,43 +35,52 @@ function App() {
 
   return (
     <div className={classes.root}>
-      <SideNav
-        mobileOpen={mobileOpen}
-        handleDrawerToggle={handleDrawerToggle}
-      />
-      <TitleBar handleDrawerToggle={handleDrawerToggle} title="Responsive" />
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-          dolor purus non enim praesent elementum facilisis leo vel. Risus at
-          ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum
-          quisque non tellus. Convallis convallis tellus id interdum velit
-          laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed
-          adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-          integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-          eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-          quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-          vivamus at augue. At augue eget arcu dictum varius duis at consectetur
-          lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
-          faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-          purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-          tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique
-          sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
-      </main>
+      <Router>
+        <SideNav
+          mobileOpen={mobileOpen}
+          handleDrawerToggle={handleDrawerToggle}
+        />
+        <TitleBar handleDrawerToggle={handleDrawerToggle} />
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          <Switch>
+            <Route path="/campaign">
+              <CampaignsView />
+            </Route>
+            <Route path="/hit/:id">
+              <HitForm />
+            </Route>
+            <Route path="/hit">
+              <HitsView />
+            </Route>
+            <Route path="/source/create">
+              <SourceForm />
+            </Route>
+            <Route path="/source/:id/edit">
+              <SourceForm />
+            </Route>
+            <Route path="/source/:id">
+              <SourceForm />
+            </Route>
+            <Route path="/source">
+              <SourcesView />
+            </Route>
+            <Route path="/listener/create">
+              <ListenerForm />
+            </Route>
+            <Route path="/listener/:id/edit">
+              <ListenerForm />
+            </Route>
+            <Route path="/listener/:id">
+              <ListenerForm />
+            </Route>
+            <Route path="/listener">
+              <ListenersView />
+            </Route>
+            <Route path="/">Home</Route>
+          </Switch>
+        </main>
+      </Router>
     </div>
   );
 }
