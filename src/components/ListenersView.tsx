@@ -18,6 +18,7 @@ import { Link, Redirect } from "react-router-dom";
 
 import Alert from "./Alert";
 import Listener from "../interfaces/Listener";
+import ListenerType from "../enums/ListenerType";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -47,6 +48,7 @@ function ListenersView() {
     id: 0,
     name: "",
     updatedAt: "",
+    type: ListenerType.Login,
   });
   const [redirect, setRedirect] = React.useState("");
   const [listeners, setListeners] = React.useState(Array<Listener>());

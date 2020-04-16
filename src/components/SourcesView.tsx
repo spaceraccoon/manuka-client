@@ -47,8 +47,7 @@ function SourcesView() {
   const [selectedSource, setSelectedSource] = React.useState<Source>({
     id: 0,
     name: "",
-    type: SourceType.Pastebin,
-    apiKey: "",
+    type: SourceType.Facebook,
   });
   const [redirect, setRedirect] = React.useState("");
   const [sources, setSources] = React.useState(Array<Source>());
@@ -139,6 +138,7 @@ function SourcesView() {
                 lookup: SourceType,
               },
               { title: "API Key", field: "apiKey" },
+              { title: "Email", field: "email" },
             ]}
             actions={[
               {
@@ -146,7 +146,7 @@ function SourcesView() {
                 tooltip: "Edit Source",
                 onClick: (event, rowData) => {
                   if (!Array.isArray(rowData)) {
-                    setRedirect(`/source/${rowData.id}`);
+                    setRedirect(`/source/${rowData.id}/edit`);
                   }
                 },
               },

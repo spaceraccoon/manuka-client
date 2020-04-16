@@ -52,7 +52,8 @@ function SourceForm() {
   const [source, setSource] = React.useState<Source>({
     id: Number(id),
     name: "",
-    type: SourceType.Pastebin,
+    type: SourceType.Facebook,
+    email: "",
     apiKey: "",
   });
 
@@ -71,10 +72,29 @@ function SourceForm() {
   const handleChange = (prop: keyof Source) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setSource({
-      ...source,
-      [prop]: prop === "type" ? Number(event.target.value) : event.target.value,
-    });
+    if (prop === "type") {
+      if (Number(event.target.value) === SourceType.Pastebin) {
+        setSource({
+          ...source,
+          [prop]: Number(event.target.value),
+          email: "",
+        });
+      } else if (
+        Number(event.target.value) === SourceType.Facebook ||
+        Number(event.target.value) === SourceType.LinkedIn
+      ) {
+        setSource({
+          ...source,
+          [prop]: Number(event.target.value),
+          apiKey: "",
+        });
+      }
+    } else {
+      setSource({
+        ...source,
+        [prop]: event.target.value,
+      });
+    }
   };
 
   const handleCloseErrorMessage = () => {
@@ -199,19 +219,6 @@ function SourceForm() {
           </FormControl>
           <FormControl className={classes.formControl} fullWidth>
             <TextField
-              label="API Key"
-              value={source.apiKey}
-              onChange={handleChange("apiKey")}
-              InputProps={{
-                readOnly: !isEdit,
-              }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </FormControl>
-          <FormControl className={classes.formControl} fullWidth>
-            <TextField
               InputProps={{
                 readOnly: !isEdit,
               }}
@@ -231,6 +238,37 @@ function SourceForm() {
                 })}
             </TextField>
           </FormControl>
+          {source.type === SourceType.Pastebin && (
+            <FormControl className={classes.formControl} fullWidth>
+              <TextField
+                label="API Key"
+                value={source.apiKey}
+                onChange={handleChange("apiKey")}
+                InputProps={{
+                  readOnly: !isEdit,
+                }}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </FormControl>
+          )}
+          {(source.type === SourceType.Facebook ||
+            source.type === SourceType.LinkedIn) && (
+            <FormControl className={classes.formControl} fullWidth>
+              <TextField
+                label="Email"
+                value={source.email}
+                onChange={handleChange("email")}
+                InputProps={{
+                  readOnly: !isEdit,
+                }}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </FormControl>
+          )}
         </Grid>
       </Grid>
     </div>

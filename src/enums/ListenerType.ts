@@ -1,7 +1,6 @@
 enum SourceType {
-  Facebook = 1,
-  LinkedIn,
-  Pastebin,
+  Login = 1,
+  Social,
 }
 
 export default SourceType;

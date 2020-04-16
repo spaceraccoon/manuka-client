@@ -10,6 +10,7 @@ import {
   DialogTitle,
   FormControl,
   Grid,
+  MenuItem,
   Snackbar,
   TextField,
   Typography,
@@ -19,6 +20,7 @@ import { Redirect, useLocation, useParams } from "react-router-dom";
 
 import Alert from "./Alert";
 import Listener from "../interfaces/Listener";
+import ListenerType from "../enums/ListenerType";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,6 +52,10 @@ function ListenerForm() {
   const [listener, setListener] = React.useState<Listener>({
     id: Number(id),
     name: "",
+    updatedAt: "",
+    type: ListenerType.Login,
+    email: "",
+    url: "",
   });
 
   React.useEffect(() => {
@@ -67,10 +73,26 @@ function ListenerForm() {
   const handleChange = (prop: keyof Listener) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setListener({
-      ...listener,
-      [prop]: event.target.value,
-    });
+    if (prop === "type") {
+      if (Number(event.target.value) === ListenerType.Login) {
+        setListener({
+          ...listener,
+          [prop]: Number(event.target.value),
+          email: "",
+        });
+      } else if (Number(event.target.value) === ListenerType.Social) {
+        setListener({
+          ...listener,
+          [prop]: Number(event.target.value),
+          url: "",
+        });
+      }
+    } else {
+      setListener({
+        ...listener,
+        [prop]: event.target.value,
+      });
+    }
   };
 
   const handleCloseErrorMessage = () => {
@@ -200,6 +222,57 @@ function ListenerForm() {
                 value={listener.updatedAt}
                 InputProps={{
                   readOnly: true,
+                }}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </FormControl>
+          )}
+          <FormControl className={classes.formControl} fullWidth>
+            <TextField
+              InputProps={{
+                readOnly: !isEdit,
+              }}
+              select
+              label="Type"
+              value={listener.type}
+              onChange={handleChange("type")}
+            >
+              {Object.keys(ListenerType)
+                .filter((x) => isNaN(Number(x)) === false)
+                .map((key: string) => {
+                  return (
+                    <MenuItem key={key} value={key}>
+                      {ListenerType[Number(key)]}
+                    </MenuItem>
+                  );
+                })}
+            </TextField>
+          </FormControl>
+          {listener.type === ListenerType.Login && (
+            <FormControl className={classes.formControl} fullWidth>
+              <TextField
+                label="URL"
+                value={listener.url}
+                onChange={handleChange("url")}
+                InputProps={{
+                  readOnly: !isEdit,
+                }}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </FormControl>
+          )}
+          {listener.type === ListenerType.Social && (
+            <FormControl className={classes.formControl} fullWidth>
+              <TextField
+                label="Email"
+                value={listener.email}
+                onChange={handleChange("email")}
+                InputProps={{
+                  readOnly: !isEdit,
                 }}
                 InputLabelProps={{
                   shrink: true,
