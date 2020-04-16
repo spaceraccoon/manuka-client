@@ -76,7 +76,7 @@ function ListenersView() {
         handleToggleDialog();
       })
       .catch(function (error) {
-        setErrorMessage(error.response.statusText);
+        setErrorMessage(error.response.data.error);
         handleToggleDialog();
       });
   };
@@ -91,7 +91,7 @@ function ListenersView() {
         setIsLoading(false);
       })
       .catch(function (error) {
-        setErrorMessage(error.response.statusText);
+        setErrorMessage(error.response.data.error);
         setIsLoading(false);
       });
   }, []);

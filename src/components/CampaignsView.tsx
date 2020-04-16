@@ -77,7 +77,7 @@ function CampaignsView() {
         handleToggleDialog();
       })
       .catch(function (error) {
-        setErrorMessage(error.response.statusText);
+        setErrorMessage(error.response.data.error);
         handleToggleDialog();
       });
   };
@@ -92,7 +92,7 @@ function CampaignsView() {
         setIsLoading(false);
       })
       .catch(function (error) {
-        setErrorMessage(error.response.statusText);
+        setErrorMessage(error.response.data.error);
         setIsLoading(false);
       });
   }, []);

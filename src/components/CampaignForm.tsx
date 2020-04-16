@@ -66,7 +66,6 @@ function CampaignForm() {
   const [campaign, setCampaign] = React.useState<Campaign>({
     id: Number(id),
     name: "",
-    updatedAt: "",
     honeypots: Array<Honeypot>(),
   });
   const [listeners, setListeners] = React.useState(Array<Listener>());
@@ -79,7 +78,7 @@ function CampaignForm() {
         setSources(response.data);
       })
       .catch(function (error) {
-        setErrorMessage(error.response.statusText);
+        setErrorMessage(error.response.data.error);
       });
     axios
       .get("/api/v1/listener")
@@ -87,7 +86,7 @@ function CampaignForm() {
         setListeners(response.data);
       })
       .catch(function (error) {
-        setErrorMessage(error.response.statusText);
+        setErrorMessage(error.response.data.error);
       });
     campaign.id &&
       axios
@@ -96,7 +95,7 @@ function CampaignForm() {
           setCampaign(response.data);
         })
         .catch(function (error) {
-          setErrorMessage(error.response.statusText);
+          setErrorMessage(error.response.data.error);
         });
   }, [campaign.id]);
 
@@ -161,7 +160,7 @@ function CampaignForm() {
         setRedirect("/campaign");
       })
       .catch(function (error) {
-        setErrorMessage(error.response.statusText);
+        setErrorMessage(error.response.data.error);
       });
   };
 
@@ -175,7 +174,7 @@ function CampaignForm() {
           setRedirect(`/campaign/${response.data.id}`);
         })
         .catch(function (error) {
-          setErrorMessage(error.response.statusText);
+          setErrorMessage(error.response.data.error);
         });
     } else {
       axios
@@ -186,7 +185,7 @@ function CampaignForm() {
           setRedirect(`/campaign/${response.data.id}`);
         })
         .catch(function (error) {
-          setErrorMessage(error.response.statusText);
+          setErrorMessage(error.response.data.error);
         });
     }
   };

@@ -64,7 +64,7 @@ function SourceForm() {
           setSource(response.data);
         })
         .catch(function (error) {
-          setErrorMessage(error.response.statusText);
+          setErrorMessage(error.response.data.error);
         });
   }, [source.id]);
 
@@ -92,7 +92,7 @@ function SourceForm() {
         setRedirect("/source");
       })
       .catch(function (error) {
-        setErrorMessage(error.response.statusText);
+        setErrorMessage(error.response.data.error);
       });
   };
 
@@ -106,7 +106,7 @@ function SourceForm() {
           setRedirect(`/source/${response.data.id}`);
         })
         .catch(function (error) {
-          setErrorMessage(error.response.statusText);
+          setErrorMessage(error.response.data.error);
         });
     } else {
       axios
@@ -117,7 +117,7 @@ function SourceForm() {
           setRedirect(`/source/${response.data.id}`);
         })
         .catch(function (error) {
-          setErrorMessage(error.response.statusText);
+          setErrorMessage(error.response.data.error);
         });
     }
   };

@@ -60,7 +60,7 @@ function ListenerForm() {
           setListener(response.data);
         })
         .catch(function (error) {
-          setErrorMessage(error.response.statusText);
+          setErrorMessage(error.response.data.error);
         });
   }, [listener.id]);
 
@@ -88,7 +88,7 @@ function ListenerForm() {
         setRedirect("/listener");
       })
       .catch(function (error) {
-        setErrorMessage(error.response.statusText);
+        setErrorMessage(error.response.data.error);
       });
   };
 
@@ -102,7 +102,7 @@ function ListenerForm() {
           setRedirect(`/listener/${response.data.id}`);
         })
         .catch(function (error) {
-          setErrorMessage(error.response.statusText);
+          setErrorMessage(error.response.data.error);
         });
     } else {
       axios
@@ -113,7 +113,7 @@ function ListenerForm() {
           setRedirect(`/listener/${response.data.id}`);
         })
         .catch(function (error) {
-          setErrorMessage(error.response.statusText);
+          setErrorMessage(error.response.data.error);
         });
     }
   };

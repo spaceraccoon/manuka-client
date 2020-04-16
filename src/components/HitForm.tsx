@@ -57,7 +57,7 @@ function HitForm() {
           setHit(response.data);
         })
         .catch(function (error) {
-          setErrorMessage(error.response.statusText);
+          setErrorMessage(error.response.data.error);
         });
   }, [hit.id]);
 
@@ -76,7 +76,7 @@ function HitForm() {
         setRedirect("/hit");
       })
       .catch(function (error) {
-        setErrorMessage(error.response.statusText);
+        setErrorMessage(error.response.data.error);
       });
   };
 

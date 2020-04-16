@@ -78,7 +78,7 @@ function SourcesView() {
         handleToggleDialog();
       })
       .catch(function (error) {
-        setErrorMessage(error.response.statusText);
+        setErrorMessage(error.response.data.error);
         handleToggleDialog();
       });
   };
@@ -92,7 +92,7 @@ function SourcesView() {
         setIsLoading(false);
       })
       .catch(function (error) {
-        setErrorMessage(error.response.statusText);
+        setErrorMessage(error.response.data.error);
         setIsLoading(false);
       });
   }, []);

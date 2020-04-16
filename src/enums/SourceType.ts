@@ -1,6 +1,6 @@
 enum SourceType {
-  Pastebin,
   Facebook,
+  Pastebin,
 }
 
 export default SourceType;
