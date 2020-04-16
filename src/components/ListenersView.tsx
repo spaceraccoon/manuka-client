@@ -135,6 +135,8 @@ function ListenersView() {
               },
               { title: "Name", field: "name" },
               { title: "Updated At", field: "updatedAt" },
+              { title: "Email", field: "email" },
+              { title: "URL", field: "url" },
             ]}
             actions={[
               {
