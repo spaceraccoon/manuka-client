@@ -67,6 +67,7 @@ function CampaignForm() {
     id: Number(id),
     name: "",
     honeypots: Array<Honeypot>(),
+    updatedAt: isEdit ? undefined : "",
   });
   const [listeners, setListeners] = React.useState(Array<Listener>());
   const [sources, setSources] = React.useState(Array<Source>());

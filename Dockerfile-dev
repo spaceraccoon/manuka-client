@@ -7,14 +7,14 @@ ENV PATH=$PATH:/node_modules/.bin
 WORKDIR /manuka-client
 
 # Copy project files for build
-COPY package.json ./
-COPY package-lock.json ./
+COPY package.json .
+COPY package-lock.json .
 
 # Install dependencies
 RUN npm install --silent
 
 # Add application
-COPY . ./
+COPY . .
 
 # Run create-react-app server
 CMD ["npm", "start"]

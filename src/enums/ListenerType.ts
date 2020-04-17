@@ -1,6 +1,6 @@
-enum SourceType {
+enum ListenerType {
   Login = 1,
   Social,
 }
 
-export default SourceType;
+export default ListenerType;

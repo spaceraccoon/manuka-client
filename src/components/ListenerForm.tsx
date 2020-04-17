@@ -52,10 +52,10 @@ function ListenerForm() {
   const [listener, setListener] = React.useState<Listener>({
     id: Number(id),
     name: "",
-    updatedAt: "",
     type: ListenerType.Login,
     email: "",
     url: "",
+    updatedAt: isEdit ? undefined : "",
   });
 
   React.useEffect(() => {
