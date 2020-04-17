@@ -8,6 +8,7 @@ import Alert from "./Alert";
 import DataTable from "./DataTable";
 import DataTableRowButtons from "./DataTableRowButtons";
 import Source from "../interfaces/Source";
+import SourceType from "../enums/SourceType";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -85,6 +86,7 @@ function SourcesView() {
           {
             title: "Type",
             name: "type",
+            getCellValue: (row) => SourceType[row.type],
           },
           { title: "API Key", name: "apiKey" },
           { title: "Email", name: "email" },

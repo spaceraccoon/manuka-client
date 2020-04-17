@@ -8,6 +8,7 @@ import Alert from "./Alert";
 import DataTable from "./DataTable";
 import DataTableRowButtons from "./DataTableRowButtons";
 import Listener from "../interfaces/Listener";
+import ListenerType from "../enums/ListenerType";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -83,6 +84,13 @@ function ListenersView() {
           },
           { title: "Name", name: "name" },
           { title: "Updated At", name: "updatedAt" },
+          {
+            title: "Type",
+            name: "type",
+            getCellValue: (row) => ListenerType[row.type],
+          },
+          { title: "URL", name: "url" },
+          { title: "Email", name: "email" },
           {
             title: "Actions",
             name: "actions",
