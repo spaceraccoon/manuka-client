@@ -35,7 +35,7 @@ function SourcesView() {
         setSources(sources.filter((source) => source.id !== id));
       })
       .catch(function (error) {
-        setErrorMessage(error.response.data.error);
+        setErrorMessage(error.response.data.error || error.response.statusText);
       });
   };
 
@@ -46,7 +46,7 @@ function SourcesView() {
         setSources(response.data);
       })
       .catch(function (error) {
-        setErrorMessage(error.response.data.error);
+        setErrorMessage(error.response.data.error || error.response.statusText);
       });
   }, []);
 
@@ -57,7 +57,7 @@ function SourcesView() {
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         autoHideDuration={3000}
         onClose={handleCloseErrorMessage}
-        open={errorMessage.length === 0 ? false : true}
+        open={!errorMessage || errorMessage.length === 0 ? false : true}
       >
         <Alert severity="error">{errorMessage}</Alert>
       </Snackbar>
@@ -91,6 +91,11 @@ function SourcesView() {
           { title: "API Key", name: "apiKey" },
           { title: "Email", name: "email" },
           {
+            title: "Pastes",
+            name: "pastes",
+            getCellValue: (row) => row.pastebinUrls && row.pastebinUrls.length,
+          },
+          {
             title: "Actions",
             name: "actions",
             getCellValue: (row) => (
@@ -98,6 +103,7 @@ function SourcesView() {
                 dataType="source"
                 handleEdit={setRedirect}
                 handleDelete={handleDelete}
+                isDeleteOnly={false}
                 key={row.id}
                 rowId={row.id}
               />

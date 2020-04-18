@@ -35,7 +35,7 @@ function ListenersView() {
         setListeners(listeners.filter((listener) => listener.id !== id));
       })
       .catch(function (error) {
-        setErrorMessage(error.response.data.error);
+        setErrorMessage(error.response.data.error || error.response.statusText);
       });
   };
 
@@ -57,7 +57,7 @@ function ListenersView() {
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         autoHideDuration={3000}
         onClose={handleCloseErrorMessage}
-        open={errorMessage.length === 0 ? false : true}
+        open={!errorMessage || errorMessage.length === 0 ? false : true}
       >
         <Alert severity="error">{errorMessage}</Alert>
       </Snackbar>
@@ -99,6 +99,7 @@ function ListenersView() {
                 dataType="listener"
                 handleEdit={setRedirect}
                 handleDelete={handleDelete}
+                isDeleteOnly={false}
                 key={row.id}
                 rowId={row.id}
               />

@@ -6,6 +6,7 @@ interface Source {
   type: SourceType;
   apiKey?: string;
   email?: string;
+  pastebinUrls?: Array<string>;
 }
 
 export default Source;

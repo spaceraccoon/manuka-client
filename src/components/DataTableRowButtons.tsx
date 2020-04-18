@@ -15,11 +15,12 @@ interface DataTableRowButtonsProps {
   dataType: string;
   handleEdit: (redirect: string) => void;
   handleDelete: (id: number) => void;
+  isDeleteOnly: boolean;
   rowId: number;
 }
 
 function DataTableRowButtons(props: DataTableRowButtonsProps) {
-  const { dataType, handleEdit, handleDelete, rowId } = props;
+  const { dataType, handleEdit, handleDelete, isDeleteOnly, rowId } = props;
   const [isDialogOpen, setIsDialogOpen] = React.useState(false);
 
   return (
@@ -29,14 +30,16 @@ function DataTableRowButtons(props: DataTableRowButtonsProps) {
         event.stopPropagation();
       }}
     >
-      <IconButton
-        component="span"
-        onClick={() => {
-          handleEdit(`/${dataType}/${rowId}/edit`);
-        }}
-      >
-        <EditIcon />
-      </IconButton>
+      {!isDeleteOnly && (
+        <IconButton
+          component="span"
+          onClick={() => {
+            handleEdit(`/${dataType}/${rowId}/edit`);
+          }}
+        >
+          <EditIcon />
+        </IconButton>
+      )}
       <IconButton component="span" onClick={() => setIsDialogOpen(true)}>
         <DeleteIcon />
       </IconButton>

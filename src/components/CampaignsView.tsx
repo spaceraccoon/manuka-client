@@ -34,7 +34,7 @@ function CampaignsView() {
         setCampaigns(campaigns.filter((campaign) => campaign.id !== id));
       })
       .catch(function (error) {
-        setErrorMessage(error.response.data.error);
+        setErrorMessage(error.response.data.error || error.response.statusText);
       });
   };
 
@@ -45,7 +45,7 @@ function CampaignsView() {
         setCampaigns(response.data);
       })
       .catch(function (error) {
-        setErrorMessage(error.response.data.error);
+        setErrorMessage(error.response.data.error || error.response.statusText);
       });
   }, []);
 
@@ -56,7 +56,7 @@ function CampaignsView() {
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         autoHideDuration={3000}
         onClose={handleCloseErrorMessage}
-        open={errorMessage.length === 0 ? false : true}
+        open={!errorMessage || errorMessage.length === 0 ? false : true}
       >
         <Alert severity="error">{errorMessage}</Alert>
       </Snackbar>
@@ -96,6 +96,7 @@ function CampaignsView() {
                 dataType="campaign"
                 handleEdit={setRedirect}
                 handleDelete={handleDelete}
+                isDeleteOnly={false}
                 key={row.id}
                 rowId={row.id}
               />

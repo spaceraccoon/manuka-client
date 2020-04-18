@@ -10,7 +10,11 @@ import {
   DialogTitle,
   FormControl,
   Grid,
+  List,
+  ListItem,
+  ListItemText,
   MenuItem,
+  Paper,
   Snackbar,
   TextField,
   Typography,
@@ -24,8 +28,12 @@ import SourceType from "../enums/SourceType";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    grid: {
+    paper: {
       marginTop: theme.spacing(1),
+      padding: theme.spacing(3),
+    },
+    subHeader: {
+      color: "rgba(255, 255, 255, 0.7)",
     },
     titleButtons: {
       marginLeft: theme.spacing(2),
@@ -65,7 +73,9 @@ function SourceForm() {
           setSource(response.data);
         })
         .catch(function (error) {
-          setErrorMessage(error.response.data.error);
+          setErrorMessage(
+            error.response.data.error || error.response.statusText
+          );
         });
   }, [source.id]);
 
@@ -112,7 +122,7 @@ function SourceForm() {
         setRedirect("/source");
       })
       .catch(function (error) {
-        setErrorMessage(error.response.data.error);
+        setErrorMessage(error.response.data.error || error.response.statusText);
       });
   };
 
@@ -126,7 +136,9 @@ function SourceForm() {
           setRedirect(`/source/${response.data.id}`);
         })
         .catch(function (error) {
-          setErrorMessage(error.response.data.error);
+          setErrorMessage(
+            error.response.data.error || error.response.statusText
+          );
         });
     } else {
       axios
@@ -137,7 +149,9 @@ function SourceForm() {
           setRedirect(`/source/${response.data.id}`);
         })
         .catch(function (error) {
-          setErrorMessage(error.response.data.error);
+          setErrorMessage(
+            error.response.data.error || error.response.statusText
+          );
         });
     }
   };
@@ -149,7 +163,7 @@ function SourceForm() {
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         autoHideDuration={3000}
         onClose={handleCloseErrorMessage}
-        open={errorMessage.length === 0 ? false : true}
+        open={!errorMessage || errorMessage.length === 0 ? false : true}
       >
         <Alert severity="error">{errorMessage}</Alert>
       </Snackbar>
@@ -202,8 +216,8 @@ function SourceForm() {
           )}
         </span>
       </Box>
-      <Grid className={classes.grid} container spacing={3}>
-        <Grid item xs={12} md={6}>
+      <Grid item xs={12} lg={6}>
+        <Paper className={classes.paper}>
           <FormControl fullWidth>
             <TextField
               label="Name"
@@ -269,7 +283,36 @@ function SourceForm() {
               />
             </FormControl>
           )}
-        </Grid>
+          {!isEdit && source.type === SourceType.Pastebin && (
+            <>
+              <FormControl className={classes.formControl} fullWidth>
+                <List
+                  dense
+                  disablePadding
+                  subheader={<span className={classes.subHeader}>Pastes</span>}
+                >
+                  {source.pastebinUrls &&
+                    source.pastebinUrls.map((pastebinUrl, index) => (
+                      <ListItem
+                        button
+                        component="a"
+                        href={pastebinUrl}
+                        key={index}
+                        target="_blank"
+                      >
+                        <ListItemText
+                          primary={pastebinUrl.replace(
+                            "https://pastebin.com/",
+                            ""
+                          )}
+                        />
+                      </ListItem>
+                    ))}
+                </List>
+              </FormControl>
+            </>
+          )}
+        </Paper>
       </Grid>
     </div>
   );

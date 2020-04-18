@@ -11,6 +11,7 @@ import {
   FormControl,
   Grid,
   MenuItem,
+  Paper,
   Snackbar,
   TextField,
   Typography,
@@ -24,8 +25,9 @@ import ListenerType from "../enums/ListenerType";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    grid: {
+    paper: {
       marginTop: theme.spacing(1),
+      padding: theme.spacing(3),
     },
     titleButtons: {
       marginLeft: theme.spacing(2),
@@ -66,7 +68,9 @@ function ListenerForm() {
           setListener(response.data);
         })
         .catch(function (error) {
-          setErrorMessage(error.response.data.error);
+          setErrorMessage(
+            error.response.data.error || error.response.statusText
+          );
         });
   }, [listener.id]);
 
@@ -110,7 +114,7 @@ function ListenerForm() {
         setRedirect("/listener");
       })
       .catch(function (error) {
-        setErrorMessage(error.response.data.error);
+        setErrorMessage(error.response.data.error || error.response.statusText);
       });
   };
 
@@ -124,7 +128,9 @@ function ListenerForm() {
           setRedirect(`/listener/${response.data.id}`);
         })
         .catch(function (error) {
-          setErrorMessage(error.response.data.error);
+          setErrorMessage(
+            error.response.data.error || error.response.statusText
+          );
         });
     } else {
       axios
@@ -135,7 +141,9 @@ function ListenerForm() {
           setRedirect(`/listener/${response.data.id}`);
         })
         .catch(function (error) {
-          setErrorMessage(error.response.data.error);
+          setErrorMessage(
+            error.response.data.error || error.response.statusText
+          );
         });
     }
   };
@@ -147,7 +155,7 @@ function ListenerForm() {
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         autoHideDuration={3000}
         onClose={handleCloseErrorMessage}
-        open={errorMessage.length === 0 ? false : true}
+        open={!errorMessage || errorMessage.length === 0 ? false : true}
       >
         <Alert severity="error">{errorMessage}</Alert>
       </Snackbar>
@@ -200,9 +208,9 @@ function ListenerForm() {
           )}
         </span>
       </Box>
-      <Grid className={classes.grid} container spacing={3}>
-        <Grid item xs={12} md={6}>
-          <FormControl className={classes.formControl} fullWidth>
+      <Grid item xs={12} lg={6}>
+        <Paper className={classes.paper}>
+          <FormControl fullWidth>
             <TextField
               label="Name"
               value={listener.name}
@@ -280,7 +288,7 @@ function ListenerForm() {
               />
             </FormControl>
           )}
-        </Grid>
+        </Paper>
       </Grid>
     </div>
   );

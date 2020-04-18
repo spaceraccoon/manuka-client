@@ -10,6 +10,7 @@ import {
   DialogTitle,
   FormControl,
   Grid,
+  Paper,
   Snackbar,
   TextField,
   Typography,
@@ -22,8 +23,9 @@ import Hit from "../interfaces/Hit";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    grid: {
+    paper: {
       marginTop: theme.spacing(1),
+      padding: theme.spacing(3),
     },
     titleButtons: {
       marginLeft: theme.spacing(2),
@@ -57,7 +59,9 @@ function HitForm() {
           setHit(response.data);
         })
         .catch(function (error) {
-          setErrorMessage(error.response.data.error);
+          setErrorMessage(
+            error.response.data.error || error.response.statusText
+          );
         });
   }, [hit.id]);
 
@@ -76,7 +80,7 @@ function HitForm() {
         setRedirect("/hit");
       })
       .catch(function (error) {
-        setErrorMessage(error.response.data.error);
+        setErrorMessage(error.response.data.error || error.response.statusText);
       });
   };
 
@@ -87,7 +91,7 @@ function HitForm() {
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         autoHideDuration={3000}
         onClose={handleCloseErrorMessage}
-        open={errorMessage.length === 0 ? false : true}
+        open={!errorMessage || errorMessage.length === 0 ? false : true}
       >
         <Alert severity="error">{errorMessage}</Alert>
       </Snackbar>
@@ -121,9 +125,9 @@ function HitForm() {
           </Dialog>
         </span>
       </Box>
-      <Grid className={classes.grid} container spacing={3}>
-        <Grid item xs={12} md={6}>
-          <FormControl className={classes.formControl} fullWidth>
+      <Grid item xs={12} lg={6}>
+        <Paper className={classes.paper}>
+          <FormControl fullWidth>
             <TextField
               label="Created At"
               value={hit.createdAt}
@@ -147,7 +151,7 @@ function HitForm() {
               }}
             />
           </FormControl>
-        </Grid>
+        </Paper>
       </Grid>
     </div>
   );

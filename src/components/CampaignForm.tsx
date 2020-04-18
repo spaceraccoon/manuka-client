@@ -16,6 +16,7 @@ import {
   FormGroup,
   Grid,
   MenuItem,
+  Paper,
   Snackbar,
   TextField,
   Typography,
@@ -32,8 +33,9 @@ import Source from "../interfaces/Source";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    grid: {
+    paper: {
       marginTop: theme.spacing(1),
+      padding: theme.spacing(3),
     },
     margin: {
       margin: theme.spacing(1),
@@ -74,30 +76,29 @@ function CampaignForm() {
 
   React.useEffect(() => {
     axios
-      .get("/api/v1/source")
+      .get(`/api/v1/source`)
       .then(function (response) {
         setSources(response.data);
+        return axios.get(`/api/v1/listener`);
       })
-      .catch(function (error) {
-        setErrorMessage(error.response.data.error);
-      });
-    axios
-      .get("/api/v1/listener")
       .then(function (response) {
         setListeners(response.data);
+        if (campaign.id) {
+          axios
+            .get(`/api/v1/campaign/${campaign.id}`)
+            .then(function (response) {
+              setCampaign(response.data);
+            })
+            .catch(function (error) {
+              setErrorMessage(
+                error.response.data.error || error.response.statusText
+              );
+            });
+        }
       })
       .catch(function (error) {
-        setErrorMessage(error.response.data.error);
+        setErrorMessage(error.response.data.error || error.response.statusText);
       });
-    campaign.id &&
-      axios
-        .get(`/api/v1/campaign/${campaign.id}`)
-        .then(function (response) {
-          setCampaign(response.data);
-        })
-        .catch(function (error) {
-          setErrorMessage(error.response.data.error);
-        });
   }, [campaign.id]);
 
   const handleAddHoneypot = () => {
@@ -161,7 +162,7 @@ function CampaignForm() {
         setRedirect("/campaign");
       })
       .catch(function (error) {
-        setErrorMessage(error.response.data.error);
+        setErrorMessage(error.response.data.error || error.response.statusText);
       });
   };
 
@@ -175,7 +176,9 @@ function CampaignForm() {
           setRedirect(`/campaign/${response.data.id}`);
         })
         .catch(function (error) {
-          setErrorMessage(error.response.data.error);
+          setErrorMessage(
+            error.response.data.error || error.response.statusText
+          );
         });
     } else {
       axios
@@ -186,7 +189,9 @@ function CampaignForm() {
           setRedirect(`/campaign/${response.data.id}`);
         })
         .catch(function (error) {
-          setErrorMessage(error.response.data.error);
+          setErrorMessage(
+            error.response.data.error || error.response.statusText
+          );
         });
     }
   };
@@ -198,7 +203,7 @@ function CampaignForm() {
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         autoHideDuration={3000}
         onClose={handleCloseErrorMessage}
-        open={errorMessage.length === 0 ? false : true}
+        open={!errorMessage || errorMessage.length === 0 ? false : true}
       >
         <Alert severity="error">{errorMessage}</Alert>
       </Snackbar>
@@ -251,9 +256,9 @@ function CampaignForm() {
           )}
         </span>
       </Box>
-      <Grid className={classes.grid} container spacing={3}>
-        <Grid item xs={12} md={6}>
-          <FormControl className={classes.formControl} fullWidth>
+      <Grid item xs={12} lg={6}>
+        <Paper className={classes.paper}>
+          <FormControl fullWidth>
             <TextField
               label="Name"
               value={campaign.name}
@@ -289,7 +294,7 @@ function CampaignForm() {
           </Typography>
           {campaign.honeypots &&
             campaign.honeypots.map((honeypot, index) => (
-              <Card className={classes.grid} key={index}>
+              <Card elevation={0} key={index} raised={false}>
                 <CardContent>
                   <FormGroup>
                     <FormControl fullWidth>
@@ -369,7 +374,7 @@ function CampaignForm() {
               Add Honeypot
             </Fab>
           )}
-        </Grid>
+        </Paper>
       </Grid>
     </div>
   );
