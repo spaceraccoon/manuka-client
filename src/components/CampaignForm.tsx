@@ -40,6 +40,10 @@ const useStyles = makeStyles((theme: Theme) =>
     margin: {
       margin: theme.spacing(1),
     },
+    noSidePadding: {
+      paddingLeft: theme.spacing(0),
+      paddingRight: theme.spacing(0),
+    },
     titleButtons: {
       marginLeft: theme.spacing(2),
       "& > *": {
@@ -295,7 +299,7 @@ function CampaignForm() {
           {campaign.honeypots &&
             campaign.honeypots.map((honeypot, index) => (
               <Card elevation={0} key={index} raised={false}>
-                <CardContent>
+                <CardContent className={classes.noSidePadding}>
                   <FormGroup>
                     <FormControl fullWidth>
                       <TextField

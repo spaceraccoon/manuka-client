@@ -89,6 +89,11 @@ function CampaignsView() {
             getCellValue: (row) => row.honeypots.length,
           },
           {
+            title: "Hits",
+            name: "hits",
+            getCellValue: (row) => row.hits.length,
+          },
+          {
             title: "Actions",
             name: "actions",
             getCellValue: (row) => (

@@ -22,7 +22,7 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
-      marginTop: theme.spacing(1),
+      marginTop: theme.spacing(2),
     },
   })
 );
