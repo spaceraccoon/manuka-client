@@ -45,7 +45,7 @@ function TitleBar(props: TitleBarProps) {
           to="/"
           style={{ color: "white", textDecoration: "none" }}
         >
-          Manuka
+          MANUKA
         </Typography>
       </Toolbar>
     </AppBar>

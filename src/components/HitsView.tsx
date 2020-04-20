@@ -1,6 +1,9 @@
 import React from "react";
 import axios from "axios";
-import { Box, Snackbar, Typography } from "@material-ui/core";
+import { Box, Button, Snackbar, Typography } from "@material-ui/core";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import PauseIcon from "@material-ui/icons/Pause";
+import PlayIcon from "@material-ui/icons/PlayArrow";
 import { Redirect } from "react-router-dom";
 
 import Alert from "./Alert";
@@ -11,14 +14,27 @@ import Hit from "../interfaces/Hit";
 import Honeypot from "../interfaces/Honeypot";
 import HitType from "../enums/HitType";
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    titleButtons: {
+      marginLeft: theme.spacing(2),
+      "& > *": {
+        margin: theme.spacing(0.5),
+      },
+    },
+  })
+);
+
 function HitsView() {
+  const classes = useStyles();
   const [errorMessage, setErrorMessage] = React.useState("");
   const [redirect, setRedirect] = React.useState("");
   const [campaigns, setCampaigns] = React.useState(Array<Campaign>());
   const [hits, setHits] = React.useState(Array<Hit>());
   const [honeypots, setHoneypots] = React.useState(Array<Honeypot>());
-  // const [hits, setHits] = React.useState(Array<Hit>());
-  // const [hits, setHits] = React.useState(Array<Hit>());
+  const [isReloading, setIsReloading] = React.useState(true);
+
+  const reloadInterval = React.useRef(0);
 
   const handleCloseErrorMessage = () => {
     setErrorMessage("");
@@ -35,7 +51,18 @@ function HitsView() {
       });
   };
 
-  React.useEffect(() => {
+  const handleToggleReload = () => {
+    if (reloadInterval.current !== 0) {
+      window.clearInterval(reloadInterval.current);
+      reloadInterval.current = 0;
+      setIsReloading(false);
+    } else {
+      reloadInterval.current = window.setInterval(fetchHits, 3000);
+      setIsReloading(true);
+    }
+  };
+
+  const fetchHits = () => {
     axios
       .get(`/api/v1/campaign`)
       .then(function (response) {
@@ -52,6 +79,15 @@ function HitsView() {
       .catch(function (error) {
         setErrorMessage(error.response.data.error || error.response.statusText);
       });
+  };
+
+  React.useEffect(() => {
+    fetchHits();
+    if (reloadInterval.current !== 0) {
+      window.clearInterval(reloadInterval.current);
+    }
+    reloadInterval.current = window.setInterval(fetchHits, 3000);
+    return () => window.clearInterval(reloadInterval.current);
   }, []);
 
   return (
@@ -70,6 +106,15 @@ function HitsView() {
         <Typography variant="h4" display="inline">
           All Hits
         </Typography>
+        <span className={classes.titleButtons}>
+          <Button
+            variant="contained"
+            onClick={handleToggleReload}
+            startIcon={isReloading ? <PauseIcon /> : <PlayIcon />}
+          >
+            {isReloading ? "Pause" : "Start"} Reload
+          </Button>
+        </span>
       </Box>
       <DataTable
         columns={[
@@ -114,6 +159,10 @@ function HitsView() {
             },
           },
           { title: "IP Address", name: "ipAddress" },
+          {
+            title: "Email",
+            name: "email",
+          },
           {
             title: "Actions",
             name: "actions",

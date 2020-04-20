@@ -10,6 +10,7 @@ import {
   DialogTitle,
   FormControl,
   Grid,
+  MenuItem,
   Paper,
   Snackbar,
   TextField,
@@ -20,6 +21,7 @@ import { Redirect, useParams } from "react-router-dom";
 
 import Alert from "./Alert";
 import Hit from "../interfaces/Hit";
+import HitType from "../enums/HitType";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -47,7 +49,9 @@ function HitForm() {
   const [redirect, setRedirect] = React.useState("");
   const [hit, setHit] = React.useState<Hit>({
     id: Number(id),
+    type: HitType.FacebookRequest,
     createdAt: "",
+    email: "",
     ipAddress: "",
   });
 
@@ -141,16 +145,52 @@ function HitForm() {
           </FormControl>
           <FormControl className={classes.formControl} fullWidth>
             <TextField
-              label="IP Address"
-              value={hit.ipAddress}
               InputProps={{
                 readOnly: true,
               }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
+              select
+              label="Type"
+              value={hit.type}
+            >
+              {Object.keys(HitType)
+                .filter((x) => isNaN(Number(x)) === false)
+                .map((key: string) => {
+                  return (
+                    <MenuItem key={key} value={key}>
+                      {HitType[Number(key)]}
+                    </MenuItem>
+                  );
+                })}
+            </TextField>
           </FormControl>
+          {hit.ipAddress && (
+            <FormControl className={classes.formControl} fullWidth>
+              <TextField
+                label="IP Address"
+                value={hit.ipAddress}
+                InputProps={{
+                  readOnly: true,
+                }}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </FormControl>
+          )}
+          {hit.email && (
+            <FormControl className={classes.formControl} fullWidth>
+              <TextField
+                label="Email"
+                value={hit.email}
+                InputProps={{
+                  readOnly: true,
+                }}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </FormControl>
+          )}
         </Paper>
       </Grid>
     </div>
