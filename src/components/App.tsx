@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import CampaignForm from "./CampaignForm";
 import CampaignsView from "./CampaignsView";
+import Dashboard from "./Dashboard";
 import HitForm from "./HitForm";
 import HitsView from "./HitsView";
 import ListenerForm from "./ListenerForm";
@@ -84,7 +85,9 @@ function App() {
             <Route path="/listener">
               <ListenersView />
             </Route>
-            <Route path="/">Home</Route>
+            <Route path="/">
+              <Dashboard />
+            </Route>
           </Switch>
         </main>
       </Router>

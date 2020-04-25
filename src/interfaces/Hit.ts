@@ -6,6 +6,7 @@ interface Hit {
   ipAddress: string;
   email: string;
   type: HitType;
+  sourceId: number;
 }
 
 export default Hit;

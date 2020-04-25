@@ -9,6 +9,7 @@ import {
   ListItemText,
 } from "@material-ui/core";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import HomeIcon from "@material-ui/icons/Home";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import RadioIcon from "@material-ui/icons/Radio";
@@ -46,6 +47,12 @@ function SideNav(props: SideNavProps) {
       <div className={classes.toolbar} />
       <Divider />
       <List onClick={() => handleDrawerToggle(false)}>
+        <ListItem button component={Link} to="/">
+          <ListItemIcon>
+            <HomeIcon />
+          </ListItemIcon>
+          <ListItemText primary="Dashboard" />
+        </ListItem>
         <ListItem button component={Link} to="/campaign">
           <ListItemIcon>
             <InboxIcon />

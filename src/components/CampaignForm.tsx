@@ -112,8 +112,8 @@ function CampaignForm() {
         ...campaign.honeypots,
         {
           name: "",
-          listenerId: listeners[0].id,
-          sourceId: sources[0].id,
+          listenerId: listeners.length > 0 ? listeners[0].id : 0,
+          sourceId: sources.length > 0 ? sources[0].id : 0,
         },
       ],
     });
